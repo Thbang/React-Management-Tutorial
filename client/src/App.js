@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import React, {Component, PureComponent} from 'react'
 import Customer from './components/Customer'
+import CustomerAdd from './components/CustomerAdd'
 import './App.css';
 import Table from '@material-ui/core/Table';
 import Paper from '@material-ui/core/Paper';
@@ -12,6 +13,7 @@ import { render } from '@testing-library/react';
 import { TableRow } from '@material-ui/core';
 import  CircularProgress from '@material-ui/core/CircularProgress'; 
 import { conformsTo } from 'lodash';
+
 
 const styles = theme =>({
 root:{
@@ -41,9 +43,29 @@ margin: theme.spacing.unit *2
 
 class App extends Component {
   //state는 변경될수 있는 데이터 처리, props는 변경 될수 없는 데이터 처리
-  state={
-    customers: "",
-    completed: 0
+  // state={
+  //   customers: "",
+  //   completed: 0
+  // }
+
+  constructor(props){
+    super(props);
+    this.state={
+      customers: '',
+      completd: 0
+    }
+  }
+
+  //setstate를 초기화
+  stateRefresh = () => {
+    this.setState({
+      customer: '',
+      completed: 0
+
+    });
+    this.callApi()
+    .then(res => this.setState({customers: res}))
+    .catch(err => console.log(err));
   }
 
 
@@ -68,10 +90,11 @@ class App extends Component {
     const body = await response.json();
     return body;
   }
-
+  // render 실행 함수
   render() {
     const {classes} = this.props;
     return (
+     <div>
       <Paper className = {classes.root}>
         
           <Table className = {classes.table}>
@@ -104,6 +127,8 @@ class App extends Component {
        
   
       </Paper>
+      <CustomerAdd stateRefresh={this.stateRefresh}/>
+      </div>
     );
   };
 
