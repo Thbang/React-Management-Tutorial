@@ -61,7 +61,7 @@ app.get('/api/customers', (req, res) => {
     var request = new sql.Request();
     request.stream = true;
 
-    q = 'select * from  [MMS_PT2].[dbo].[CUSTOMER]';
+    q = 'select * from  [MMS_PT2].[dbo].[CUSTOMER] WHERE ISDELETED = 0';
     request.query(q, (err, recordset) => {
         if (err) {
             return console.log('query error :', err)
@@ -77,7 +77,7 @@ app.get('/api/customers', (req, res) => {
     })
         .on
         ('done', () => { // 마지막에 실행되는 부분
-            console.log('result :', result);
+            // console.log('result :', result);
             res.send(result);
 
         });
@@ -113,7 +113,7 @@ app.post('/api/customers', upload.single('image'),(req, res)=>{
     var request = new sql.Request();
     request.stream = true;
     // sql.input('input_name',name, value)
-    var ss ="Insert INTO [MMS_PT2].[dbo].[CUSTOMER] VALUES("+image+","+ name +","+birthday+","+gender+","+job+")";
+    var ss ="Insert INTO [MMS_PT2].[dbo].[CUSTOMER] VALUES("+image+","+ name +","+birthday+","+gender+","+job+", GETDATE(), 0)";
     request.query(ss, (err, recordset) => {
         if(err){
             consnole.log('query error :', err)
@@ -132,10 +132,35 @@ app.post('/api/customers', upload.single('image'),(req, res)=>{
     })
         .on
         ('done', () => { // 마지막에 실행되는 부분
-            console.log('result :', result);
+            // console.log('result :', result);
             res.send(result);
 
         });
 })
 
+app.delete('/api/customers/:id',(req,res)=>{
+    let sss = 'UPDATE [MMS_PT2].[dbo].[CUSTOMER]  SET ISDELETED=1 WHERE ID= '+ req.params.id;
+    console.log('result :', req.params.id);
+    var request = new sql.Request();
+    request.query(sss, (err, recordset) => {
+        if(err){
+            consnole.log('query error :', err)
+        }
+        else{
+            console.log('insert 완료')
+        }
+    });
+    
+    var result = [];
+
+    request.on('row', (row) => {
+        result.push(row)
+    })
+        .on
+        ('done', () => { // 마지막에 실행되는 부분
+       
+            res.send(result);
+
+        });
+});
 app.listen(port, () => console.log(`Listening on port ${port}`));

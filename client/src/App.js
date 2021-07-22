@@ -106,12 +106,14 @@ class App extends Component {
               <TableCell>생년월일</TableCell>
               <TableCell>성별</TableCell>
               <TableCell>직업</TableCell>
+              <TableCell>설정</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>     
               {/* API응답 결과 출력        */}
               {this.state.customers ?  this.state.customers.map(c =>{
-                return (<Customer key={c.ID}  id={c.ID} image={c.IMAGE}  name={c.NAME} birthday={c.BIRTHDAY} gender={c.GENDER} job={c.JOB} />) 
+                // 삭제후에 스테이터스 리플래쉬가 실행 되어야 하기 때문에
+                return (<Customer stateRefresh={this.stateRefresh} key={c.ID}  id={c.ID} image={c.IMAGE}  name={c.NAME} birthday={c.BIRTHDAY} gender={c.GENDER} job={c.JOB} />) 
               }) : 
               <TableRow>
                 <TableCell colSpan="6" align="center">
