@@ -40,7 +40,7 @@ sql.connect(config, function (err) {
     if (err) {
         return console.error('error : ', err);
     }
-    console.log('MSSQL 연결 완료')
+    console.log('MSSQL ?���?? ?���??')
 })
 
 const multer = require('multer');
@@ -76,7 +76,7 @@ app.get('/api/customers', (req, res) => {
         result.push(row)
     })
         .on
-        ('done', () => { // 마지막에 실행되는 부분
+        ('done', () => { // 마�??막에 ?��?��?��?�� �??�??
             // console.log('result :', result);
             res.send(result);
 
@@ -84,7 +84,7 @@ app.get('/api/customers', (req, res) => {
 
 });
 
-// 사용자 입장에서 image이름 경로 접근 하지만 실제는 서버의 upload 경로로 맵핑
+// ?��?��?�� ?��?��?��?�� image?���?? 경로 ?���?? ?���??�?? ?��?��?�� ?��버의 upload 경로�?? 맵핑
 app.use('/image',express.static('./upload'));
 
 app.post('/api/customers', upload.single('image'),(req, res)=>{
@@ -119,7 +119,7 @@ app.post('/api/customers', upload.single('image'),(req, res)=>{
             consnole.log('query error :', err)
         }
         else{
-            console.log('insert 완료')
+            console.log('insert ?���??')
         }
     });
     
@@ -131,7 +131,7 @@ app.post('/api/customers', upload.single('image'),(req, res)=>{
         result.push(row)
     })
         .on
-        ('done', () => { // 마지막에 실행되는 부분
+        ('done', () => { // 마�??막에 ?��?��?��?�� �??�??
             // console.log('result :', result);
             res.send(result);
 
@@ -147,7 +147,7 @@ app.delete('/api/customers/:id',(req,res)=>{
             consnole.log('query error :', err)
         }
         else{
-            console.log('insert 완료')
+            console.log('insert ?���??')
         }
     });
     
@@ -157,7 +157,7 @@ app.delete('/api/customers/:id',(req,res)=>{
         result.push(row)
     })
         .on
-        ('done', () => { // 마지막에 실행되는 부분
+        ('done', () => { // 마�??막에 ?��?��?��?�� �??�??
        
             res.send(result);
 

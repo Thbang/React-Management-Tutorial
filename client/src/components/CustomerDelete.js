@@ -1,22 +1,68 @@
 import React from 'react';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography'
 
-class   CustomerDelete extends React.Component {
+class CustomerDelete extends React.Component {
 
-// ªË¡¶ πˆ∆∞ ¥≠∑µ¿ªΩ√ ∞Ì∞¥¡§∫∏∞° ªË¡¶µ«¥¬ ±‚¥…¿« api«‘ºˆ 
-deleteCustomer(id){
-    const url = '/api/customers/'+id;
-    fetch(url,{
-        method: 'DELETE'
-    });
-    this.props.stateRefresh();
-}
+    constructor(props) {
+        super(props);
+        this.state = {
+            open: false
+        }
+    }
+
+    // ÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩ∆∞ ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩÔøΩ«¥ÔøΩ ÔøΩÔøΩÔøΩÔøΩÔøΩ apiÔøΩ‘ºÔøΩ 
+    deleteCustomer(id) {
+        const url = '/api/customers/' + id;
+        fetch(url, {
+            method: 'DELETE'
+        });
+        this.props.stateRefresh();
+    }
+
+    handleClickOpen = () => {
+        this.setState({
+            open: true
+        })
+    }
+
+    handleClose = () => {
+        this.setState({
+
+            open: false
+        })
+
+    }
 
 
-render(){
-    return (
-        <button onClick={(e) => {this.deleteCustomer(this.props.id)}}>ªË¡¶</button>
-    )
-}
+    render() {
+        return (
+            <div>
+                <Button variant="contained" color="sencondary" onClick={this.handleClickOpen}>ÏÇ≠Ï†ú</Button>
+                <Dialog open={this.state.open} onClose={this.handleClose}>
+                    <DialogTitle onClose={this.handleClose}>
+                        ÏÇ≠Ï†ú Í≤ΩÍ≥†
+                    </DialogTitle>
+                    <DialogContent>
+                        <Typography gutterBottom>
+                           ÏÑ†ÌÉùÌïú Í≥†Í∞ù Ï†ïÎ≥¥Í∞Ä ÏÇ≠Ï†úÎê©ÎãàÎã§.
+                        </Typography>
+
+                    </DialogContent>
+                    <DialogActions>
+                        <Button variant="contained" color="primary" onClick={(e) => { this.deleteCustomer(this.props.id) }}>ÏÇ≠Ï†ú</Button>
+                        <Button variant="outlined" color="primary" onClick={this.handleClose}>Îã´Í∏∞</Button>
+                    </DialogActions>
+
+                </Dialog>
+            </div>
+
+        )
+    }
 
 }
 
